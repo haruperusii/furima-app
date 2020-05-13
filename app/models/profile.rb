@@ -14,5 +14,4 @@ class Profile < ApplicationRecord
     validates :birth_month
     validates :birth_day
   end
-  
 end
