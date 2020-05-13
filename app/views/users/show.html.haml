@@ -5,6 +5,8 @@
   = render partial: "layouts/header"
 .center
   = render partial: "layouts/center"
+- breadcrumb :mypage
+= render "layouts/breadcrumbs"
 .contents 
   = render partial: "layouts/side"
   .box
@@ -47,7 +49,7 @@
                         円
                       %li
                         = icon('fa', 'star')
-                        6
+                        = item.favorites.length
                     %p (税込)
       .tab-2
         .tab-2__head
@@ -68,7 +70,7 @@
                         円
                       %li
                         = icon('fa', 'star')
-                        6
+                        = item.favorites.length
                     %p (税込)
 .body__center__download
   = render partial: "layouts/image"

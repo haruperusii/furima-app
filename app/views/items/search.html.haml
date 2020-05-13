@@ -1,0 +1,63 @@
+.header
+  = render partial: "layouts/header"
+.center
+  = render partial: "layouts/center"
+- breadcrumb :search
+= render "layouts/breadcrumbs"
+.result
+  .result__side
+    .title
+      詳細検索
+    .side
+      = search_form_for(@q, url:search_items_path) do |f|
+        %span
+          キーワードで検索
+        .side__name
+          = f.search_field :name_cont
+        %span
+          カテゴリーで検索
+        .side__category
+          = f.collection_select :category_id_eq, @category, :name, :name, :include_blank => '指定なし'
+        %span
+          ブランドで検索
+        .sidec
+          = f.search_field :brand_name_cont
+        %span
+          値段で検索
+        .side__value
+          = f.search_field :value_gteq
+          %span.hoge
+            〜
+          = f.search_field :value_lteq
+        .side__submit
+          = f.submit
+  .search
+    .search__title
+      %span
+        検索結果一覧
+    .search__num
+      = @num.length
+      %span
+        件ヒット
+    .search__box
+      - @items.each do |item|
+        - if item.switch == "published" && item.sold == "sale"
+          .search__box__lists
+            = link_to item_path(item.id) do
+              .search__box__lists__image
+                = image_tag item.images.first.image.url, class:"tab__lists__list__image", alt:""
+              .search__box__lists__info
+                %h1.name
+                  = item.name
+                .search__box__lists__info__price
+                  %ul 
+                    = item.value
+                    円
+                  %li
+                    = icon('fa', 'star')
+                    = item.favorites.length
+                %p (税込)
+.body__center__download
+  = render partial: "layouts/image"
+.footer
+  = render partial: "layouts/footer"

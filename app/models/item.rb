@@ -4,6 +4,9 @@ class Item < ApplicationRecord
   has_one :brand, dependent: :destroy
   has_one :shipment, dependent: :destroy
   has_many :images, dependent: :destroy
+  has_many :comments 
+  has_many :favorites, dependent: :destroy
+  has_many :favorite_users, through: :favorites, source: :user
   accepts_nested_attributes_for :shipment, allow_destroy: true
   accepts_nested_attributes_for :images, allow_destroy: true
   accepts_nested_attributes_for :brand, allow_destroy: true
@@ -23,4 +26,6 @@ class Item < ApplicationRecord
   validates :info, presence: true, length: { in: 1..1000 }
   validates :value, presence: true, numericality: { greater_than_or_equal_to: 300, less_than_or_equal_to: 9999999}
   validates :status, :category_id, :switch, :sold, presence: true
+
+  scope :searchs, -> (search){where('name LIKE(?)', "%#{search}%")}
 end

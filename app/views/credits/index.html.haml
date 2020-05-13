@@ -2,6 +2,8 @@
   = render partial: "layouts/header"
 .center
   = render partial: "layouts/center"
+- breadcrumb :credit
+= render "layouts/breadcrumbs"
 .contents 
   = render partial: "layouts/side"
   .box
@@ -27,8 +29,7 @@
                   = @exp_month + " / " + @exp_year
                 .textalign__card
                   .displayflex
-                    = form_with url: delete_user_credits_path(current_user.id), method: :post, id: 'charge-form',  name: "inputForm" do |f|
-                      = f.submit "削除する", class: "remove"
+                    = link_to "削除する", delete_user_credits_path(current_user.id), method: :post, id: 'charge-form',  name: "inputForm", data: {confirm: '本当に削除しますか?' }
 .body__center__download
   = render partial: "layouts/image"
 .footer
